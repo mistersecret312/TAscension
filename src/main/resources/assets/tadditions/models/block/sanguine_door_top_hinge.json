@@ -1,7 +1,0 @@
-{
-	"parent": "minecraft:block/door_top_rh",
-	"textures": {
-		"top": "tadditions:block/sangue_door_top",
-		"bottom": "tadditions:block/sangue_door_bottom"
-	}
-}

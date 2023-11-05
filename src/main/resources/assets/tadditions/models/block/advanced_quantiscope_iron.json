@@ -1,6 +1,0 @@
-{
-	"parent":"tardis:block/quantiscope",
-	"textures":{
-		"0":"tadditions:block/advancedquantiscope_iron"
-	}
-}
