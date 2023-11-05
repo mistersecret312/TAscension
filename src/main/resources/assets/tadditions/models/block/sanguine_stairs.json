@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/stairs",
-  "textures": {
-    "bottom": "tadditions:block/sangue_planks",
-    "top": "tadditions:block/sangue_planks",
-    "side": "tadditions:block/sangue_planks"
-  }
-}

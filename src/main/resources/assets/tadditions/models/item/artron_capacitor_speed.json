@@ -1,7 +1,0 @@
-{
-    "parent":"tardis:item/artron_capacitor",
-	"textures":{
-		"0":"tadditions:item/tier_5",
-		"particle":"tadditions:item/tier_5"
-	}
-}

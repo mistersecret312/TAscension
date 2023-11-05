@@ -1,0 +1,8 @@
+{
+  "required": true,
+  "package": "net.cyber.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+  ],
+  "minVersion": "0.8"
+}
