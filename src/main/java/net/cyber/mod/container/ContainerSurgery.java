@@ -1,20 +1,10 @@
 package net.cyber.mod.container;
 
-import net.cyber.mod.helper.CyberAPI;
-import net.cyber.mod.helper.CyberCon;
-import net.cyber.mod.helper.ICyberInfo;
 import net.cyber.mod.tileentity.TileEntitySurgery;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.ContainerType;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.SlotItemHandler;
 
 public class ContainerSurgery extends BEContainer<TileEntitySurgery> {
 

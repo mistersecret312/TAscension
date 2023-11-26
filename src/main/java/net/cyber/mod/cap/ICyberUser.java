@@ -1,7 +1,6 @@
 package net.cyber.mod.cap;
 
-import net.cyber.mod.helper.ICyberInfo;
-import net.minecraft.entity.Entity;
+import net.cyber.mod.helper.CyberPartEnum;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.INBT;
@@ -12,11 +11,8 @@ import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
 
-import javax.annotation.Nonnull;
-import java.util.List;
-
 public interface ICyberUser extends INBTSerializable<CompoundNBT> {
-    NonNullList<ItemStack> getInstalledCyberware(ICyberInfo.EnumSlot slot);
+    NonNullList<ItemStack> getInstalledCyberware(CyberPartEnum type);
     boolean isCyberwareInstalled(ItemStack cyberware);
 
     @Deprecated

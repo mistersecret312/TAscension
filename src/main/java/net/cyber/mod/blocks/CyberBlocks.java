@@ -20,8 +20,7 @@ public class CyberBlocks {
 
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, CyberMod.MOD_ID);
 
-    public static final RegistryObject<Block> SurgeryChamber = register("surgery_chamber", () -> setUpBlock(new BlockSurgeryChamber(AbstractBlock.Properties.create(Material.ANVIL))), CyberItemGroups.CYBERMOD);
-    public static final RegistryObject<Block> Surgery = register("surgeon", () -> setUpBlock(new BlockSurgeon(AbstractBlock.Properties.create(Material.ANVIL))), CyberItemGroups.CYBERMOD);
+    public static final RegistryObject<Block> SURGEON = register("surgeon", () -> setUpBlock(new BlockSurgeon(AbstractBlock.Properties.create(Material.ANVIL))), CyberItemGroups.CYBERMOD);
 
 
     private static <T extends Block> T setUpBlock(T block) {

@@ -22,14 +22,14 @@ import java.util.*;
 public class CyberwareCap implements ICyberUser {
 
     private PlayerEntity player;
+    public int essence = 100;
 
     public CyberwareCap(PlayerEntity ent){
         this.player = ent;
     }
 
-
     @Override
-    public NonNullList<ItemStack> getInstalledCyberware(ICyberInfo.EnumSlot slot) {
+    public NonNullList<ItemStack> getInstalledCyberware(CyberPartEnum type) {
         return null;
     }
 
@@ -40,11 +40,13 @@ public class CyberwareCap implements ICyberUser {
 
     @Override
     public CompoundNBT serializeNBT() {
-        return null;
+        CompoundNBT tag = new CompoundNBT();
+        tag.putInt("essence", this.essence);
+        return tag;
     }
 
     @Override
     public void deserializeNBT(CompoundNBT nbt) {
-
+        this.essence = nbt.getInt("essence");
     }
 }

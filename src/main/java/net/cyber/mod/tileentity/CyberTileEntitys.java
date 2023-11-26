@@ -15,7 +15,7 @@ public class CyberTileEntitys {
 
     public static final DeferredRegister<TileEntityType<?>> TILES = DeferredRegister.create(ForgeRegistries.TILE_ENTITIES, CyberMod.MOD_ID);
 
-    public static final RegistryObject<TileEntityType<TileEntitySurgery>> SR = TILES.register("surgeon", () -> registerTiles(TileEntitySurgery::new, CyberBlocks.Surgery.get()));
+    public static final RegistryObject<TileEntityType<TileEntitySurgery>> SR = TILES.register("surgeon", () -> registerTiles(TileEntitySurgery::new, CyberBlocks.SURGEON.get()));
 
     private static <T extends TileEntity> TileEntityType<T> registerTiles(Supplier<T> tile, Block... validBlock) {
         TileEntityType<T> type = TileEntityType.Builder.create(tile, validBlock).build(null);

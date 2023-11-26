@@ -25,7 +25,7 @@ public class CyberClientRegistry {
         registerScreens();
         event.enqueueWork(() -> {
             //Block Render Layers
-            RenderTypeLookup.setRenderLayer(CyberBlocks.SurgeryChamber.get(), RenderType.getCutout());
+            //RenderTypeLookup.setRenderLayer(CyberBlocks.SurgeryChamber.get(), RenderType.getCutout());
         });
     }
 
@@ -35,7 +35,7 @@ public class CyberClientRegistry {
 
 
     public static void registerScreens() {
-        ScreenManager.registerFactory(CyberContainers.ADVQUANTISCOPE_WELD.get(), GuiSurgery::new);
+        ScreenManager.registerFactory(CyberContainers.SURGEON.get(), GuiSurgery::new);
     }
 }
 
