@@ -73,7 +73,7 @@ public class CyberMod
         event.enqueueWork(() ->
                 {
                 });
-        CapabilityManager.INSTANCE.register(ICyberData.class, new ICyberData.Storage(), CyberwareCap::new);
+        CapabilityManager.INSTANCE.register(ICyberUser.class, new ICyberUser.Storage(), () -> new CyberwareCap(null));
     }
 
 

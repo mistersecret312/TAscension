@@ -11,7 +11,7 @@ import net.cyber.mod.CyberMod;
 public class CyberContainers {
     public static final DeferredRegister<ContainerType<?>> CONTAINERS = DeferredRegister.create(ForgeRegistries.CONTAINERS, CyberMod.MOD_ID);
 
-    public static final RegistryObject<ContainerType<ContainerSurgery>> ADVQUANTISCOPE_WELD = CONTAINERS.register("surgery", () -> registerContainer(ContainerSurgery::new));
+    public static final RegistryObject<ContainerType<ContainerSurgery>> SURGEON = CONTAINERS.register("surgery", () -> registerContainer(ContainerSurgery::new));
 
 
     public static <T extends Container> ContainerType<T> registerContainer(IContainerFactory<T> fact){

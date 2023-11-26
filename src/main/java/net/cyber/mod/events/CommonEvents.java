@@ -2,6 +2,7 @@ package net.cyber.mod.events;
 
 import net.cyber.mod.CyberMod;
 import net.cyber.mod.cap.CyberwareCap;
+import net.cyber.mod.cap.ICyberUser;
 import net.cyber.mod.helper.ICyberData;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -34,7 +35,7 @@ public class CommonEvents {
     @SubscribeEvent
     public static void attachPlayerCap(AttachCapabilitiesEvent<Entity> event) {
         if (event.getObject() instanceof PlayerEntity)
-            event.addCapability(PLAYER_DATA_CAP, new ICyberData.Provider(new CyberwareCap()));
+            event.addCapability(PLAYER_DATA_CAP, new ICyberUser.Provider(new CyberwareCap((PlayerEntity) event.getObject())));
     }
 
 

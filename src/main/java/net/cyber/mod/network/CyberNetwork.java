@@ -1,10 +1,7 @@
 package net.cyber.mod.network;
 
 import net.cyber.mod.CyberMod;
-import net.cyber.mod.network.packets.TriggerActiveAbilityPacket;
-import net.cyber.mod.network.packets.UpdateHudColorPacket;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.fml.network.NetworkRegistry;
 import net.minecraftforge.fml.network.simple.SimpleChannel;
 
@@ -16,10 +13,7 @@ public class CyberNetwork {
 
     
     public static void init() {
-        NETWORK_CHANNEL.registerMessage(nextId(), UpdateHudColorPacket.class, UpdateHudColorPacket::encode, UpdateHudColorPacket::decode, UpdateHudColorPacket::handle);
-        NETWORK_CHANNEL.registerMessage(nextId(), TriggerActiveAbilityPacket.class, TriggerActiveAbilityPacket::encode, TriggerActiveAbilityPacket::decode, TriggerActiveAbilityPacket::handle);
-
-
+      //  NETWORK_CHANNEL.registerMessage(nextId(), UpdateHudColorPacket.class, UpdateHudColorPacket::encode, UpdateHudColorPacket::decode, UpdateHudColorPacket::handle);
     }
 
     /**
