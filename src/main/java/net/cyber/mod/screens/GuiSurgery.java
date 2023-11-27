@@ -33,8 +33,8 @@ public class GuiSurgery extends ContainerScreen<ContainerSurgery>
 	@Override
 	protected void drawGuiContainerBackgroundLayer(MatrixStack matrixStack, float partialTicks, int mouseX, int mouseY) {
 		this.renderBackground(matrixStack);
-		int texWidth = 176;
-		int textHeight = 216;
+		int texWidth = 218;
+		int textHeight = 223;
 		this.minecraft.getTextureManager().bindTexture(TEXTURE);
 		blit(matrixStack, width / 2 - texWidth / 2, height / 2 - textHeight / 2, 0, 0, texWidth, textHeight);
 	}
@@ -48,7 +48,6 @@ public class GuiSurgery extends ContainerScreen<ContainerSurgery>
 	@Override
 	protected void drawGuiContainerForegroundLayer(MatrixStack matrixStack, int x, int y) {
 		//Remove super class call so we don't show our container title
-		this.font.drawText(matrixStack, this.playerInventory.getDisplayName(), (float)this.playerInventoryTitleX, (float)this.playerInventoryTitleY+25, 4210752);
 	}
 
 }
