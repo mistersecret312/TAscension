@@ -5,5 +5,7 @@ import net.minecraft.item.ItemStack;
 public interface ICyberPart {
     int getEssenceCost();
     void setEssenceCost(int essence);
-    CyberPartEnum getCategory(ItemStack stack);
+    CyberPartEnum getCategory();
+    void runOnce();
+    void runOnTick();
 }

@@ -1,7 +1,9 @@
 package net.cyber.mod.tileentity;
 
 import net.cyber.mod.helper.ICyberPart;
+import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
@@ -25,6 +27,27 @@ public class TileEntitySurgery extends TileEntity implements ITickableTileEntity
 	@Override
 	public void tick() {
 
+		if(!world.isRemote()){
+			if(world.getGameTime() % 20 == 0){
+
+
+
+			}
+		}
+
+	}
+
+	@Override
+	public void read(BlockState state, CompoundNBT nbt) {
+		super.read(state, nbt);
+		this.handler.deserializeNBT(nbt.getCompound("Items"));
+	}
+
+	@Override
+	public CompoundNBT write(CompoundNBT compound) {
+		super.write(compound);
+		compound.put("Items", this.handler.serializeNBT());
+		return compound;
 	}
 
 	@Override

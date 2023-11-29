@@ -35,7 +35,17 @@ public class ItemCyberware extends Item implements ICyberPart {
     }
 
     @Override
-    public CyberPartEnum getCategory(ItemStack stack) {
+    public CyberPartEnum getCategory() {
         return this.type;
+    }
+
+    @Override
+    public void runOnce() {
+
+    }
+
+    @Override
+    public void runOnTick() {
+
     }
 }

@@ -12,8 +12,14 @@ import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
 
 public interface ICyberUser extends INBTSerializable<CompoundNBT> {
-    NonNullList<ItemStack> getInstalledCyberware(CyberPartEnum type);
+    NonNullList<ItemStack> getAllCyberware();
     boolean isCyberwareInstalled(ItemStack cyberware);
+    void setAllCyberware(NonNullList<ItemStack> stacks);
+    int getEssence();
+    void setEssence(int essence);
+    int getMaxEssence();
+    void setMaxEssence(int maxEssence);
+    void tick();
 
     @Deprecated
     public class Storage implements Capability.IStorage<ICyberUser> {

@@ -1,7 +1,6 @@
 {
-  "parent": "minecraft:block/cube_column",
+  "parent": "block/cube_all",
   "textures": {
-    "end": "minecraft:block/acacia_log_top",
-    "side": "minecraft:block/acacia_log"
+    "all": "tascension:block/surgeon"
   }
 }

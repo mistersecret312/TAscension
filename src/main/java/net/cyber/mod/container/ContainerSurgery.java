@@ -1,5 +1,6 @@
 package net.cyber.mod.container;
 
+import net.cyber.mod.cap.CyberCapabilities;
 import net.cyber.mod.helper.Helper;
 import net.cyber.mod.tileentity.TileEntitySurgery;
 import net.minecraft.entity.player.PlayerEntity;
@@ -24,8 +25,12 @@ public class ContainerSurgery extends BEContainer<TileEntitySurgery> {
         this.init(inv, tile);
     }
 
+
+
     public void init(PlayerInventory inv, TileEntitySurgery tile) {
 
+        //Upgrades
+        //Part 1
         this.addSlot(new SlotItemHandler(tile, 0, -5, 28));
         this.addSlot(new SlotItemHandler(tile, 1, -5, 46));
 
@@ -44,11 +49,39 @@ public class ContainerSurgery extends BEContainer<TileEntitySurgery> {
         this.addSlot(new SlotItemHandler(tile, 10, 165, 28));
         this.addSlot(new SlotItemHandler(tile, 11, 165, 46));
 
-        Helper.addPlayerInvContainer(this, inv, 9, 141);
+        //Part 2
+        this.addSlot(new SlotItemHandler(tile, 12, -5, 67));
+        this.addSlot(new SlotItemHandler(tile, 13, -5, 85));
+
+        this.addSlot(new SlotItemHandler(tile, 14, 29, 67));
+        this.addSlot(new SlotItemHandler(tile, 15, 29, 85));
+
+        this.addSlot(new SlotItemHandler(tile, 16, 63, 67));
+        this.addSlot(new SlotItemHandler(tile, 17, 63, 85));
+
+        this.addSlot(new SlotItemHandler(tile, 18, 97, 67));
+        this.addSlot(new SlotItemHandler(tile, 19, 97, 85));
+
+        this.addSlot(new SlotItemHandler(tile, 20, 131, 67));
+        this.addSlot(new SlotItemHandler(tile, 21, 131, 85));
+
+        this.addSlot(new SlotItemHandler(tile, 22, 165, 67));
+        this.addSlot(new SlotItemHandler(tile, 23, 165, 85));
+
+        Helper.addPlayerInvContainer(this, inv, 0, 54);
     }
 
+    @Override
+    public void onContainerClosed(PlayerEntity playerIn) {
+        playerIn.getCapability(CyberCapabilities.CYBERWARE_CAPABILITY).ifPresent(cap -> {
+            if(cap.getAllCyberware() != this.getInventory()){
+                cap.setAllCyberware(this.getInventory());
+            }
+        });
+        super.onContainerClosed(playerIn);
+    }
 
-        @Override
+    @Override
     public boolean canInteractWith(PlayerEntity playerIn) {
         return true;
     }

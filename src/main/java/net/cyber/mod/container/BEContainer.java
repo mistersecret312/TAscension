@@ -1,10 +1,9 @@
 package net.cyber.mod.container;
 
-import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.tileentity.TileEntity;
 
-public abstract class BEContainer<T extends TileEntity> extends Container {
+public abstract class BEContainer<T extends TileEntity> extends BaseContainer{
 
     protected T blockEntity;
 
@@ -15,5 +14,6 @@ public abstract class BEContainer<T extends TileEntity> extends Container {
     public T getBlockEntity() {
         return this.blockEntity;
     }
+
 
 }
