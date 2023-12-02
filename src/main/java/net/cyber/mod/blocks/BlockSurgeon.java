@@ -1,5 +1,6 @@
 package net.cyber.mod.blocks;
 
+import net.cyber.mod.cap.CyberCapabilities;
 import net.cyber.mod.container.ContainerSurgery;
 import net.cyber.mod.tileentity.CyberTileEntitys;
 import net.cyber.mod.tileentity.TileEntitySurgery;
@@ -56,6 +57,15 @@ public class BlockSurgeon extends TileBlock{
             @Nullable
             @Override
             public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
+                ContainerSurgery container = new ContainerSurgery(i, playerInventory, tile);
+                container.getInventory().clear();
+                playerEntity.getCapability(CyberCapabilities.CYBERWARE_CAPABILITY).ifPresent(cap -> {
+                    for(int i1 = 0; i1<container.getInventory().size(); i1++) {
+                        if (cap.getAllCyberware().size() > 0) {
+                            container.getInventory().set(i1, cap.getAllCyberware().get(i1));
+                        }
+                    }
+                });
                 return new ContainerSurgery(i, playerInventory, tile);
             }
         };

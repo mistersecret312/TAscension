@@ -1,6 +1,7 @@
 package net.cyber.mod.cap;
 
 import net.cyber.mod.CyberMod;
+import net.cyber.mod.config.CyberConfigs;
 import net.cyber.mod.helper.*;
 import net.cyber.mod.items.CyberItems;
 import net.minecraft.client.Minecraft;
@@ -23,9 +24,9 @@ import java.util.*;
 public class CyberwareCap implements ICyberUser {
 
     private PlayerEntity player;
-    public int essence = 100;
-    public int maxEssence = 100;
-    public ItemStackHandler handler;
+    public int essence = CyberConfigs.COMMON.BaseEssence.get();
+    public int maxEssence = CyberConfigs.COMMON.BaseEssence.get();
+    public ItemStackHandler handler = new ItemStackHandler(52);
 
     public CyberwareCap(PlayerEntity ent){
         this.player = ent;
@@ -60,10 +61,7 @@ public class CyberwareCap implements ICyberUser {
     public NonNullList<ItemStack> getAllCyberware() {
         NonNullList<ItemStack> stacks = NonNullList.create();
         for(int i = 0; i< this.handler.getSlots(); i++){
-           ItemStack stack = this.handler.getStackInSlot(i);
-           if(stack.getItem() instanceof ICyberPart){
-               stacks.add(stack);
-           }
+           stacks.add(this.handler.getStackInSlot(i));
         }
         return stacks;
     }
@@ -88,13 +86,13 @@ public class CyberwareCap implements ICyberUser {
     public CompoundNBT serializeNBT() {
         CompoundNBT tag = new CompoundNBT();
         tag.putInt("essence", this.essence);
-        tag.put("Items", this.handler.serializeNBT());
+        tag.put("Handler", this.handler.serializeNBT());
         return tag;
     }
 
     @Override
     public void deserializeNBT(CompoundNBT nbt) {
         this.essence = nbt.getInt("essence");
-        this.handler.deserializeNBT(nbt.getCompound("Items"));
+        this.handler.deserializeNBT(nbt.getCompound("Handler"));
     }
 }
