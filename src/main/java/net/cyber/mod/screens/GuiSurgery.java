@@ -47,8 +47,8 @@ public class GuiSurgery extends ContainerScreen<ContainerSurgery>
 		this.minecraft.getTextureManager().bindTexture(TEXTURE);
 		blit(matrixStack, width / 2 - texWidth / 2, height / 2 - textHeight / 2, 0, 0, texWidth, textHeight);
 
-		blit(matrixStack, width/2 - 85,  height/2 - 105, 239, 0, 3, 118);
-		blit(matrixStack, width/2 + 104, height/2 - 105, getColor(), 0, 3,  (int) (118 * getPercentage()));
+		blit(matrixStack, width/2 - 107,  height/2 - 105, 239, 0, 3, 118);
+		blit(matrixStack, width/2 + 104, height/2 - 104, getColor(), 0, 3,  (int) (118 * getPercentage()));
 	}
 
 

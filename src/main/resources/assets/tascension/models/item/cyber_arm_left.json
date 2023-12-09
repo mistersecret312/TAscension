@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "tascension:item/cyber/cyberlimbs_cyberarm_left"
+  }
+}

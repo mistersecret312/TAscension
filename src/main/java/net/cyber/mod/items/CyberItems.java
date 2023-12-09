@@ -15,30 +15,26 @@ public class CyberItems {
     public static final DeferredRegister<Item> ITEMS =
             DeferredRegister.create(ForgeRegistries.ITEMS, CyberMod.MOD_ID);
 
-    public static final RegistryObject<Item> FOODCUBE = ITEMS.register("foodcube", () -> createItem(new Item((new Item.Properties()).group(ItemGroup.FOOD).food(new Food.Builder().hunger(3).saturation(3F).build()))));
+    public static final RegistryObject<Item> CYBERARML = ITEMS.register("cyber_arm_left", () -> createItem(new ItemCyberware(new Item.Properties().group(CyberItemGroups.CYBERNETIC), CyberPartEnum.ARM, 10)));
+    public static final RegistryObject<Item> CYBERARMR = ITEMS.register("cyber_arm_right", () -> createItem(new ItemCyberware(new Item.Properties().group(CyberItemGroups.CYBERNETIC), CyberPartEnum.ARM, 10)));
+    public static final RegistryObject<Item> CYBERLEL = ITEMS.register("cyber_leg_left", () -> createItem(new ItemCyberware(new Item.Properties().group(CyberItemGroups.CYBERNETIC), CyberPartEnum.LEG, 10)));
+    public static final RegistryObject<Item> CYBERLER = ITEMS.register("cyber_leg_right", () -> createItem(new ItemCyberware(new Item.Properties().group(CyberItemGroups.CYBERNETIC), CyberPartEnum.LEG, 10)));
 
-    public static final RegistryObject<Item> CYBERARML = ITEMS.register("cyber_arm_left", () -> createItem(new ItemCyberware(new Item.Properties().group(CyberItemGroups.CYBERMOD), CyberPartEnum.ARM, 10)));
-    public static final RegistryObject<Item> CYBERARMR = ITEMS.register("cyber_arm_right", () -> createItem(new ItemCyberware(new Item.Properties().group(CyberItemGroups.CYBERMOD), CyberPartEnum.ARM, 10)));
-    public static final RegistryObject<Item> CYBERLEL = ITEMS.register("cyber_leg_left", () -> createItem(new ItemCyberware(new Item.Properties().group(CyberItemGroups.CYBERMOD), CyberPartEnum.LEG, 10)));
-    public static final RegistryObject<Item> CYBERLER = ITEMS.register("cyber_leg_right", () -> createItem(new ItemCyberware(new Item.Properties().group(CyberItemGroups.CYBERMOD), CyberPartEnum.LEG, 10)));
-
-    public static final RegistryObject<Item> NORMALEYE = ITEMS.register("normal_eye", () -> createItem(new ItemBodyPart(new Item.Properties().group(CyberItemGroups.CYBERMOD), CyberPartEnum.EYES)));
-    public static final RegistryObject<Item> NORMALBRAIN = ITEMS.register("normal_brain", () -> createItem(new ItemBodyPart(new Item.Properties().group(CyberItemGroups.CYBERMOD), CyberPartEnum.CRANIUM)));
-    public static final RegistryObject<Item> NORMALHEARH = ITEMS.register("normal_hearh", () -> createItem(new ItemBodyPart(new Item.Properties().group(CyberItemGroups.CYBERMOD), CyberPartEnum.HEART)));
-    public static final RegistryObject<Item> NORMALLUN = ITEMS.register("normal_lungs", () -> createItem(new ItemBodyPart(new Item.Properties().group(CyberItemGroups.CYBERMOD), CyberPartEnum.LUNGS)));
-    public static final RegistryObject<Item> NORMALSOMACH = ITEMS.register("normal_stomach", () -> createItem(new ItemBodyPart(new Item.Properties().group(CyberItemGroups.CYBERMOD), CyberPartEnum.LOWER_ORGANS)));
-    public static final RegistryObject<Item> NORMALLIVER = ITEMS.register("normal_liver", () -> createItem(new ItemBodyPart(new Item.Properties().group(CyberItemGroups.CYBERMOD), CyberPartEnum.LOWER_ORGANS)));
-    public static final RegistryObject<Item> NORMALARML = ITEMS.register("normal_arml", () -> createItem(new ItemBodyPart(new Item.Properties().group(CyberItemGroups.CYBERMOD), CyberPartEnum.ARM)));
-    public static final RegistryObject<Item> NORMALARMR = ITEMS.register("normal_armr", () -> createItem(new ItemBodyPart(new Item.Properties().group(CyberItemGroups.CYBERMOD), CyberPartEnum.ARM)));
-    public static final RegistryObject<Item> NORMALLEL = ITEMS.register("normal_lel", () -> createItem(new ItemBodyPart(new Item.Properties().group(CyberItemGroups.CYBERMOD), CyberPartEnum.LEG)));
-    public static final RegistryObject<Item> NORMALLER = ITEMS.register("normal_ler", () -> createItem(new ItemBodyPart(new Item.Properties().group(CyberItemGroups.CYBERMOD), CyberPartEnum.LEG)));
-    public static final RegistryObject<Item> NORMALSKIN = ITEMS.register("normal_skin", () -> createItem(new ItemBodyPart(new Item.Properties().group(CyberItemGroups.CYBERMOD), CyberPartEnum.SKIN)));
-    public static final RegistryObject<Item> NORMALMUSCLE = ITEMS.register("normal_muscle", () -> createItem(new ItemBodyPart(new Item.Properties().group(CyberItemGroups.CYBERMOD), CyberPartEnum.MUSCLE)));
-    public static final RegistryObject<Item> NORMALBONE = ITEMS.register("normal_bone", () -> createItem(new ItemBodyPart(new Item.Properties().group(CyberItemGroups.CYBERMOD), CyberPartEnum.BONE)));
-    public static final RegistryObject<Item> NORMALHANDL = ITEMS.register("normal_handl", () -> createItem(new ItemBodyPart(new Item.Properties().group(CyberItemGroups.CYBERMOD), CyberPartEnum.HAND)));
-    public static final RegistryObject<Item> NORMALHANDR = ITEMS.register("normal_handr", () -> createItem(new ItemBodyPart(new Item.Properties().group(CyberItemGroups.CYBERMOD), CyberPartEnum.HAND)));
-    public static final RegistryObject<Item> NORMALFOOL = ITEMS.register("normal_fool", () -> createItem(new ItemBodyPart(new Item.Properties().group(CyberItemGroups.CYBERMOD), CyberPartEnum.FOOT)));
-    public static final RegistryObject<Item> NORMALFOOR = ITEMS.register("normal_foor", () -> createItem(new ItemBodyPart(new Item.Properties().group(CyberItemGroups.CYBERMOD), CyberPartEnum.FOOT)));
+    public static final RegistryObject<Item> NORMALEYE = ITEMS.register("normal_eye", () -> createItem(new ItemBodyPart(new Item.Properties().group(CyberItemGroups.ORGANIC), CyberPartEnum.EYES)));
+    public static final RegistryObject<Item> NORMALBRAIN = ITEMS.register("normal_brain", () -> createItem(new ItemBodyPart(new Item.Properties().group(CyberItemGroups.ORGANIC), CyberPartEnum.CRANIUM)));
+    public static final RegistryObject<Item> NORMALHEARH = ITEMS.register("normal_heart", () -> createItem(new ItemBodyPart(new Item.Properties().group(CyberItemGroups.ORGANIC), CyberPartEnum.HEART)));
+    public static final RegistryObject<Item> NORMALLUN = ITEMS.register("normal_lungs", () -> createItem(new ItemBodyPart(new Item.Properties().group(CyberItemGroups.ORGANIC), CyberPartEnum.LUNGS)));
+    public static final RegistryObject<Item> NORMALSOMACH = ITEMS.register("normal_stomach", () -> createItem(new ItemBodyPart(new Item.Properties().group(CyberItemGroups.ORGANIC), CyberPartEnum.LOWER_ORGANS)));
+    public static final RegistryObject<Item> NORMALLIVER = ITEMS.register("normal_liver", () -> createItem(new ItemBodyPart(new Item.Properties().group(CyberItemGroups.ORGANIC), CyberPartEnum.LOWER_ORGANS)));
+    public static final RegistryObject<Item> NORMALARML = ITEMS.register("normal_arm_left", () -> createItem(new ItemBodyPart(new Item.Properties().group(CyberItemGroups.ORGANIC), CyberPartEnum.ARM)));
+    public static final RegistryObject<Item> NORMALARMR = ITEMS.register("normal_arm_right", () -> createItem(new ItemBodyPart(new Item.Properties().group(CyberItemGroups.ORGANIC), CyberPartEnum.ARM)));
+    public static final RegistryObject<Item> NORMALLEL = ITEMS.register("normal_leg_left", () -> createItem(new ItemBodyPart(new Item.Properties().group(CyberItemGroups.ORGANIC), CyberPartEnum.LEG)));
+    public static final RegistryObject<Item> NORMALLER = ITEMS.register("normal_leg_right", () -> createItem(new ItemBodyPart(new Item.Properties().group(CyberItemGroups.ORGANIC), CyberPartEnum.LEG)));
+    public static final RegistryObject<Item> NORMALSKIN = ITEMS.register("normal_skin", () -> createItem(new ItemBodyPart(new Item.Properties().group(CyberItemGroups.ORGANIC), CyberPartEnum.SKIN)));
+    public static final RegistryObject<Item> NORMALMUSCLE = ITEMS.register("normal_muscle", () -> createItem(new ItemBodyPart(new Item.Properties().group(CyberItemGroups.ORGANIC), CyberPartEnum.MUSCLE)));
+    public static final RegistryObject<Item> NORMALBONE = ITEMS.register("normal_bone", () -> createItem(new ItemBodyPart(new Item.Properties().group(CyberItemGroups.ORGANIC), CyberPartEnum.BONE)));
+    public static final RegistryObject<Item> NORMALHANDL = ITEMS.register("normal_hand", () -> createItem(new ItemBodyPart(new Item.Properties().group(CyberItemGroups.ORGANIC), CyberPartEnum.HAND)));
+    public static final RegistryObject<Item> NORMALFOOL = ITEMS.register("normal_foot", () -> createItem(new ItemBodyPart(new Item.Properties().group(CyberItemGroups.ORGANIC), CyberPartEnum.FOOT)));
 
 
 

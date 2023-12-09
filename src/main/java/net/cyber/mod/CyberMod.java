@@ -62,7 +62,6 @@ public class CyberMod
 
         CyberNetwork.init();
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, CyberConfigs.COMMON_SPEC);
-        ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, CyberConfigs.SERVER_SPEC);
         MinecraftForge.EVENT_BUS.register(this);
 
 

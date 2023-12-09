@@ -26,7 +26,7 @@ public class CyberwareCap implements ICyberUser {
     private PlayerEntity player;
     public int essence = CyberConfigs.COMMON.BaseEssence.get();
     public int maxEssence = CyberConfigs.COMMON.BaseEssence.get();
-    public ItemStackHandler handler = new ItemStackHandler(52);
+    public ItemStackHandler handler = new ItemStackHandler(24);
 
     public CyberwareCap(PlayerEntity ent){
         this.player = ent;
@@ -51,10 +51,26 @@ public class CyberwareCap implements ICyberUser {
     public void tick(){
         if(!player.getEntityWorld().isRemote())
         this.getAllCyberware().forEach(item -> {
-            this.setEssence(this.getEssence()-((ICyberPart)item.getItem()).getEssenceCost());
             ((ICyberPart)item.getItem()).runOnTick();
         });
 
+        updateEssence();
+    }
+
+    public void updateEssence(){
+        int newValue = 0;
+
+        for(int i = 0; i < this.getAllCyberware().size(); ++i) {
+            ItemStack stack = this.getAllCyberware().get(i);
+            if(stack.getItem() instanceof ICyberPart) {
+                ICyberPart item = (ICyberPart)stack.getItem();
+                newValue += item.getEssenceCost();
+            }
+        }
+        setEssence(newValue);
+
+        if(essence > this.maxEssence)
+            this.essence = this.maxEssence;
     }
 
     @Override
@@ -72,14 +88,13 @@ public class CyberwareCap implements ICyberUser {
         }
     }
 
-
-
     @Override
     public boolean isCyberwareInstalled(ItemStack cyberware) {
+        NonNullList<ItemStack> stacks = NonNullList.create();
         for(int i = 0; i<this.handler.getSlots(); i++){
-            return this.handler.getStackInSlot(i) == cyberware;
+            stacks.add(i, this.handler.getStackInSlot(i));
         }
-        return false;
+        return stacks.contains(cyberware);
     }
 
     @Override

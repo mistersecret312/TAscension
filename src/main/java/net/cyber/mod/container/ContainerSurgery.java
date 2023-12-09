@@ -6,7 +6,9 @@ import net.cyber.mod.tileentity.TileEntitySurgery;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.ContainerType;
+import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
+import net.minecraft.util.NonNullList;
 import net.minecraftforge.items.SlotItemHandler;
 
 public class ContainerSurgery extends BEContainer<TileEntitySurgery> {
@@ -76,10 +78,16 @@ public class ContainerSurgery extends BEContainer<TileEntitySurgery> {
     @Override
     public void onContainerClosed(PlayerEntity playerIn) {
         playerIn.getCapability(CyberCapabilities.CYBERWARE_CAPABILITY).ifPresent(cap -> {
-            if(cap.getAllCyberware() != this.getInventory()){
-                cap.setAllCyberware(this.getInventory());
+            NonNullList<ItemStack> stacks = NonNullList.create();
+            for(int i = 0; i<24; i++){
+                stacks.add(i, this.getInventory().get(i));
+            }
+            if(cap.getAllCyberware() != stacks){
+                cap.setAllCyberware(stacks);
             }
         });
+        this.getInventory().clear();
+
         super.onContainerClosed(playerIn);
     }
 
