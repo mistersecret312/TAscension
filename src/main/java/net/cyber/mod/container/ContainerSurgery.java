@@ -86,7 +86,9 @@ public class ContainerSurgery extends BEContainer<TileEntitySurgery> {
                 cap.setAllCyberware(stacks);
             }
         });
-        this.getInventory().clear();
+        for(int i = 0; i<24; i++){
+            this.getInventory().set(i, ItemStack.EMPTY);
+        }
 
         super.onContainerClosed(playerIn);
     }

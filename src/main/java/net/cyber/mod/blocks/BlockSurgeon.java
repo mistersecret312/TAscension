@@ -60,7 +60,7 @@ public class BlockSurgeon extends TileBlock{
                 ContainerSurgery container = new ContainerSurgery(i, playerInventory, tile);
                 container.getInventory().clear();
                 playerEntity.getCapability(CyberCapabilities.CYBERWARE_CAPABILITY).ifPresent(cap -> {
-                    for(int i1 = 0; i1<container.getInventory().size()-36; i1++) {
+                    for(int i1 = 0; i1<24; i1++) {
                         container.getInventory().set(i1, cap.getAllCyberware().get(i1));
                     }
                 });

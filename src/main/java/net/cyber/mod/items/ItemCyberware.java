@@ -2,6 +2,8 @@ package net.cyber.mod.items;
 
 import net.cyber.mod.helper.CyberPartEnum;
 import net.cyber.mod.helper.ICyberPart;
+import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
@@ -40,12 +42,17 @@ public class ItemCyberware extends Item implements ICyberPart {
     }
 
     @Override
-    public void runOnce() {
-
+    public void runOnce(PlayerEntity player) {
+        player.getAttribute(Attributes.MAX_HEALTH).setBaseValue(player.getAttribute(Attributes.MAX_HEALTH).getValue()+2);
     }
 
     @Override
-    public void runOnTick() {
+    public void runOnceUndo(PlayerEntity player) {
+        player.getAttribute(Attributes.MAX_HEALTH).setBaseValue(player.getAttributeValue(Attributes.MAX_HEALTH)-2);
+    }
+
+    @Override
+    public void runOnTick(PlayerEntity player) {
 
     }
 }

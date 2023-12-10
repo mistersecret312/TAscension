@@ -1,5 +1,6 @@
 package net.cyber.mod.cap;
 
+import com.google.common.collect.Maps;
 import net.cyber.mod.CyberMod;
 import net.cyber.mod.config.CyberConfigs;
 import net.cyber.mod.helper.*;
@@ -27,6 +28,7 @@ public class CyberwareCap implements ICyberUser {
     public int essence = CyberConfigs.COMMON.BaseEssence.get();
     public int maxEssence = CyberConfigs.COMMON.BaseEssence.get();
     public ItemStackHandler handler = new ItemStackHandler(24);
+    private Map<ItemStack, Boolean> mapActivated = Maps.newHashMap();
 
     public CyberwareCap(PlayerEntity ent){
         this.player = ent;
@@ -48,23 +50,59 @@ public class CyberwareCap implements ICyberUser {
         this.essence = essence;
     }
 
-    public void tick(){
-        if(!player.getEntityWorld().isRemote())
-        this.getAllCyberware().forEach(item -> {
-            ((ICyberPart)item.getItem()).runOnTick();
-        });
+    public void tick() {
+        if (!player.getEntityWorld().isRemote()) {
+            this.getAllCyberware().forEach(items -> {
+                if (items.getItem() instanceof ICyberPart) {
+                    ICyberPart item = (ICyberPart) items.getItem();
+                    item.runOnTick(player);
+                }
 
-        updateEssence();
+                initializeCyberware();
+                Set<ItemStack> removed = mapActivated.keySet();
+                this.getAllCyberware().forEach(removed::remove);
+                if(!removed.isEmpty()){
+                    removed.forEach(con -> {
+                        if (con.getItem() instanceof ICyberPart) {
+                            ((ICyberPart)con.getItem()).runOnceUndo(player);
+                        }
+                    });
+                }
+
+                mapActivated.keySet().forEach(ite -> {
+                    if (!mapActivated.get(ite)) {
+                        if (ite.getItem() instanceof ICyberPart) {
+                            ((ICyberPart) ite.getItem()).runOnce(player);
+                            mapActivated.replace(ite, true);
+                        }
+                    }
+                });
+            });
+
+            updateEssence();
+        }
+    }
+
+    public void initializeCyberware(){
+        this.getAllCyberware().forEach(items -> {
+            if (items.getItem() instanceof ICyberPart) {
+                if(mapActivated != null){
+                    if(!mapActivated.containsKey(items)){
+                        mapActivated.put(items, false);
+                    }
+                }
+            }
+        });
     }
 
     public void updateEssence(){
-        int newValue = 0;
+        int newValue = 100;
 
         for(int i = 0; i < this.getAllCyberware().size(); ++i) {
             ItemStack stack = this.getAllCyberware().get(i);
             if(stack.getItem() instanceof ICyberPart) {
                 ICyberPart item = (ICyberPart)stack.getItem();
-                newValue += item.getEssenceCost();
+                newValue -= item.getEssenceCost();
             }
         }
         setEssence(newValue);
@@ -95,6 +133,16 @@ public class CyberwareCap implements ICyberUser {
             stacks.add(i, this.handler.getStackInSlot(i));
         }
         return stacks.contains(cyberware);
+    }
+
+    @Override
+    public int getSlotItemIn(ItemStack cyberware) {
+        for(int i = 0; i<this.handler.getSlots(); i++){
+            if(this.handler.getStackInSlot(i) == cyberware){
+                return i;
+            }
+        }
+        return -1;
     }
 
     @Override
