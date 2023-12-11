@@ -6,6 +6,7 @@ import net.cyber.mod.tileentity.TileEntitySurgery;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.ContainerType;
+import net.minecraft.inventory.container.IContainerListener;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.NonNullList;
@@ -91,6 +92,11 @@ public class ContainerSurgery extends BEContainer<TileEntitySurgery> {
         }
 
         super.onContainerClosed(playerIn);
+    }
+
+    @Override
+    public void addListener(IContainerListener listener) {
+        super.addListener(listener);
     }
 
     @Override

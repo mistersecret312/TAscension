@@ -8,7 +8,9 @@ import net.cyber.mod.items.CyberItems;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.AirItem;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.*;
 import net.minecraft.util.Direction;
 import net.minecraft.util.IItemProvider;
@@ -57,31 +59,23 @@ public class CyberwareCap implements ICyberUser {
                     ICyberPart item = (ICyberPart) items.getItem();
                     item.runOnTick(player);
                 }
+            });
 
-                initializeCyberware();
-                Set<ItemStack> removed = mapActivated.keySet();
-                this.getAllCyberware().forEach(removed::remove);
-                if(!removed.isEmpty()){
-                    removed.forEach(con -> {
-                        if (con.getItem() instanceof ICyberPart) {
-                            ((ICyberPart)con.getItem()).runOnceUndo(player);
-                        }
-                    });
-                }
+            initializeCyberware();
 
-                mapActivated.keySet().forEach(ite -> {
-                    if (!mapActivated.get(ite)) {
-                        if (ite.getItem() instanceof ICyberPart) {
-                            ((ICyberPart) ite.getItem()).runOnce(player);
-                            mapActivated.replace(ite, true);
-                        }
+            mapActivated.keySet().forEach(ite -> {
+                if (!mapActivated.get(ite)) {
+                    if (ite.getItem() instanceof ICyberPart) {
+                        ((ICyberPart) ite.getItem()).runOnce(player);
+                        mapActivated.replace(ite, true);
                     }
-                });
+                }
             });
 
             updateEssence();
         }
     }
+
 
     public void initializeCyberware(){
         this.getAllCyberware().forEach(items -> {
