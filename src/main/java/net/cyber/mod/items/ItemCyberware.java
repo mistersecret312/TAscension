@@ -48,7 +48,9 @@ public class ItemCyberware extends Item implements ICyberPart {
 
     @Override
     public void runOnceUndo(PlayerEntity player) {
-        player.getAttribute(Attributes.MAX_HEALTH).setBaseValue(player.getAttributeValue(Attributes.MAX_HEALTH)-2);
+        if (player.getAttribute(Attributes.MAX_HEALTH).getBaseValue() >= 20) {
+            player.getAttribute(Attributes.MAX_HEALTH).setBaseValue(player.getAttributeValue(Attributes.MAX_HEALTH) - 2);
+        }
     }
 
     @Override

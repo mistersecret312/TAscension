@@ -1,6 +1,8 @@
 package net.cyber.mod.container;
 
 import net.cyber.mod.cap.CyberCapabilities;
+import net.cyber.mod.container.slots.UpgradeSlot;
+import net.cyber.mod.helper.CyberPartEnum;
 import net.cyber.mod.helper.Helper;
 import net.cyber.mod.tileentity.TileEntitySurgery;
 import net.minecraft.entity.player.PlayerEntity;
@@ -13,6 +15,7 @@ import net.minecraft.util.NonNullList;
 import net.minecraftforge.items.SlotItemHandler;
 
 public class ContainerSurgery extends BEContainer<TileEntitySurgery> {
+    public PlayerEntity entity;
 
     protected ContainerSurgery(ContainerType<?> type, int id) {
         super(type, id);
@@ -26,6 +29,7 @@ public class ContainerSurgery extends BEContainer<TileEntitySurgery> {
     public ContainerSurgery(int id, PlayerInventory inv, TileEntitySurgery tile) {
         super(CyberContainers.SURGEON.get(), id);
         this.init(inv, tile);
+        this.entity = inv.player;
     }
 
 
@@ -36,42 +40,42 @@ public class ContainerSurgery extends BEContainer<TileEntitySurgery> {
 
         //Upgrades
         //Part 1
-        this.addSlot(new SlotItemHandler(tile, 0, -5, 28));
-        this.addSlot(new SlotItemHandler(tile, 1, -5, 46));
+        this.addSlot(new UpgradeSlot(this, type -> type.equals(CyberPartEnum.ARM), tile, 0, -5, 28));
+        this.addSlot(new UpgradeSlot(this, type -> type.equals(CyberPartEnum.ARM), tile, 1, -5, 46));
 
-        this.addSlot(new SlotItemHandler(tile, 2, 29, 28));
-        this.addSlot(new SlotItemHandler(tile, 3, 29, 46));
+        this.addSlot(new UpgradeSlot(this, type -> type.equals(CyberPartEnum.BONE), tile,  2, 29, 28));
+        this.addSlot(new UpgradeSlot(this, type -> type.equals(CyberPartEnum.BONE), tile,  3, 29, 46));
 
-        this.addSlot(new SlotItemHandler(tile, 4, 63, 28));
-        this.addSlot(new SlotItemHandler(tile, 5, 63, 46));
+        this.addSlot(new UpgradeSlot(this, type -> type.equals(CyberPartEnum.CRANIUM), tile,  4, 63, 28));
+        this.addSlot(new UpgradeSlot(this, type -> type.equals(CyberPartEnum.CRANIUM), tile,  5, 63, 46));
 
-        this.addSlot(new SlotItemHandler(tile, 6, 97, 28));
-        this.addSlot(new SlotItemHandler(tile, 7, 97, 46));
+        this.addSlot(new UpgradeSlot(this, type -> type.equals(CyberPartEnum.EYES), tile,  6, 97, 28));
+        this.addSlot(new UpgradeSlot(this, type -> type.equals(CyberPartEnum.EYES), tile,  7, 97, 46));
 
-        this.addSlot(new SlotItemHandler(tile, 8, 131, 28));
-        this.addSlot(new SlotItemHandler(tile, 9, 131, 46));
+        this.addSlot(new UpgradeSlot(this, type -> type.equals(CyberPartEnum.FOOT), tile,  8, 131, 28));
+        this.addSlot(new UpgradeSlot(this, type -> type.equals(CyberPartEnum.FOOT), tile,  9, 131, 46));
 
-        this.addSlot(new SlotItemHandler(tile, 10, 165, 28));
-        this.addSlot(new SlotItemHandler(tile, 11, 165, 46));
+        this.addSlot(new UpgradeSlot(this, type -> type.equals(CyberPartEnum.HAND), tile,  10, 165, 28));
+        this.addSlot(new UpgradeSlot(this, type -> type.equals(CyberPartEnum.HAND), tile,  11, 165, 46));
 
         //Part 2
-        this.addSlot(new SlotItemHandler(tile, 12, -5, 67));
-        this.addSlot(new SlotItemHandler(tile, 13, -5, 85));
+        this.addSlot(new UpgradeSlot(this, type -> type.equals(CyberPartEnum.HEART), tile,  12, -5, 67));
+        this.addSlot(new UpgradeSlot(this, type -> type.equals(CyberPartEnum.HEART), tile,  13, -5, 85));
 
-        this.addSlot(new SlotItemHandler(tile, 14, 29, 67));
-        this.addSlot(new SlotItemHandler(tile, 15, 29, 85));
+        this.addSlot(new UpgradeSlot(this, type -> type.equals(CyberPartEnum.LEG), tile,  14, 29, 67));
+        this.addSlot(new UpgradeSlot(this, type -> type.equals(CyberPartEnum.LEG), tile,  15, 29, 85));
 
-        this.addSlot(new SlotItemHandler(tile, 16, 63, 67));
-        this.addSlot(new SlotItemHandler(tile, 17, 63, 85));
+        this.addSlot(new UpgradeSlot(this, type -> type.equals(CyberPartEnum.LOWER_ORGANS), tile,  16, 63, 67));
+        this.addSlot(new UpgradeSlot(this, type -> type.equals(CyberPartEnum.LOWER_ORGANS), tile,  17, 63, 85));
 
-        this.addSlot(new SlotItemHandler(tile, 18, 97, 67));
-        this.addSlot(new SlotItemHandler(tile, 19, 97, 85));
+        this.addSlot(new UpgradeSlot(this, type -> type.equals(CyberPartEnum.LUNGS), tile,  18, 97, 67));
+        this.addSlot(new UpgradeSlot(this, type -> type.equals(CyberPartEnum.LUNGS), tile,  19, 97, 85));
 
-        this.addSlot(new SlotItemHandler(tile, 20, 131, 67));
-        this.addSlot(new SlotItemHandler(tile, 21, 131, 85));
+        this.addSlot(new UpgradeSlot(this, type -> type.equals(CyberPartEnum.MUSCLE), tile,  20, 131, 67));
+        this.addSlot(new UpgradeSlot(this, type -> type.equals(CyberPartEnum.MUSCLE), tile,  21, 131, 85));
 
-        this.addSlot(new SlotItemHandler(tile, 22, 165, 67));
-        this.addSlot(new SlotItemHandler(tile, 23, 165, 85));
+        this.addSlot(new UpgradeSlot(this, type -> type.equals(CyberPartEnum.SKIN), tile,  22, 165, 67));
+        this.addSlot(new UpgradeSlot(this, type -> type.equals(CyberPartEnum.SKIN), tile,  23, 165, 85));
 
         Helper.addPlayerInvContainer(this, inv, 0, 54);
     }

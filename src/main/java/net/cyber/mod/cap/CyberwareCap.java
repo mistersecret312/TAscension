@@ -106,6 +106,13 @@ public class CyberwareCap implements ICyberUser {
     }
 
     @Override
+    public void handleRemoved(ItemStack stack){
+        if(stack.getItem() instanceof ICyberPart){
+            ((ICyberPart)stack.getItem()).runOnceUndo(player);
+        }
+    }
+
+    @Override
     public NonNullList<ItemStack> getAllCyberware() {
         NonNullList<ItemStack> stacks = NonNullList.create();
         for(int i = 0; i< this.handler.getSlots(); i++){

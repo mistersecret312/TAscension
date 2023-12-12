@@ -14,6 +14,7 @@ import net.minecraftforge.common.util.LazyOptional;
 public interface ICyberUser extends INBTSerializable<CompoundNBT> {
     NonNullList<ItemStack> getAllCyberware();
     int getSlotItemIn(ItemStack cyberware);
+    void handleRemoved(ItemStack oldCyberware);
     boolean isCyberwareInstalled(ItemStack cyberware);
     void setAllCyberware(NonNullList<ItemStack> stacks);
     int getEssence();
