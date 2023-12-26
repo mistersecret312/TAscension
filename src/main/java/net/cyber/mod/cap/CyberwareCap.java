@@ -1,6 +1,7 @@
 package net.cyber.mod.cap;
 
 import com.google.common.collect.Maps;
+import jdk.nashorn.internal.runtime.regexp.joni.Config;
 import net.cyber.mod.CyberMod;
 import net.cyber.mod.config.CyberConfigs;
 import net.cyber.mod.helper.*;
@@ -27,8 +28,8 @@ import java.util.*;
 public class CyberwareCap implements ICyberUser {
 
     private PlayerEntity player;
-    public int essence = CyberConfigs.COMMON.BaseEssence.get();
-    public int maxEssence = CyberConfigs.COMMON.BaseEssence.get();
+    public float essence = CyberConfigs.COMMON.BaseEssence.get();
+    public float maxEssence = CyberConfigs.COMMON.BaseEssence.get();
     public ItemStackHandler handler = new ItemStackHandler(24);
     private Map<ItemStack, Boolean> mapActivated = Maps.newHashMap();
 
@@ -36,19 +37,19 @@ public class CyberwareCap implements ICyberUser {
         this.player = ent;
     }
 
-    public int getEssence(){
+    public float getEssence(){
         return this.essence;
     }
 
-    public int getMaxEssence(){
+    public float getMaxEssence(){
         return this.maxEssence;
     }
 
-    public void setMaxEssence(int maxEssence) {
+    public void setMaxEssence(float maxEssence) {
         this.maxEssence = maxEssence;
     }
 
-    public void setEssence(int essence) {
+    public void setEssence(float essence) {
         this.essence = essence;
     }
 
@@ -61,36 +62,13 @@ public class CyberwareCap implements ICyberUser {
                 }
             });
 
-            initializeCyberware();
-
-            mapActivated.keySet().forEach(ite -> {
-                if (!mapActivated.get(ite)) {
-                    if (ite.getItem() instanceof ICyberPart) {
-                        ((ICyberPart) ite.getItem()).runOnce(player);
-                        mapActivated.replace(ite, true);
-                    }
-                }
-            });
-
             updateEssence();
         }
     }
 
 
-    public void initializeCyberware(){
-        this.getAllCyberware().forEach(items -> {
-            if (items.getItem() instanceof ICyberPart) {
-                if(mapActivated != null){
-                    if(!mapActivated.containsKey(items)){
-                        mapActivated.put(items, false);
-                    }
-                }
-            }
-        });
-    }
-
     public void updateEssence(){
-        int newValue = 100;
+        float newValue = CyberConfigs.COMMON.BaseEssence.get();
 
         for(int i = 0; i < this.getAllCyberware().size(); ++i) {
             ItemStack stack = this.getAllCyberware().get(i);
@@ -109,6 +87,13 @@ public class CyberwareCap implements ICyberUser {
     public void handleRemoved(ItemStack stack){
         if(stack.getItem() instanceof ICyberPart){
             ((ICyberPart)stack.getItem()).runOnceUndo(player);
+        }
+    }
+
+    @Override
+    public void handleAdded(ItemStack stack){
+        if(stack.getItem() instanceof ICyberPart){
+            ((ICyberPart)stack.getItem()).runOnce(player);
         }
     }
 
@@ -149,14 +134,14 @@ public class CyberwareCap implements ICyberUser {
     @Override
     public CompoundNBT serializeNBT() {
         CompoundNBT tag = new CompoundNBT();
-        tag.putInt("essence", this.essence);
+        tag.putFloat("essence", this.essence);
         tag.put("Handler", this.handler.serializeNBT());
         return tag;
     }
 
     @Override
     public void deserializeNBT(CompoundNBT nbt) {
-        this.essence = nbt.getInt("essence");
+        this.essence = nbt.getFloat("essence");
         this.handler.deserializeNBT(nbt.getCompound("Handler"));
     }
 }

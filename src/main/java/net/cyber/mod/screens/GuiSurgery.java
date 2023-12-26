@@ -37,7 +37,6 @@ public class GuiSurgery extends ContainerScreen<ContainerSurgery>
 	public void init()
 	{
 		super.init();
-        this.addApplyButton(109-201, (223/2)-134);
 
 	}
 
@@ -67,7 +66,7 @@ public class GuiSurgery extends ContainerScreen<ContainerSurgery>
 
 	public double getPercentage(){
 		AtomicDouble percent = new AtomicDouble();
-		this.player.getCapability(CyberCapabilities.CYBERWARE_CAPABILITY).ifPresent(cap -> percent.set((((float) cap.getEssence())/((float)cap.getMaxEssence()))));
+		this.player.getCapability(CyberCapabilities.CYBERWARE_CAPABILITY).ifPresent(cap -> percent.set(cap.getEssence()/cap.getMaxEssence()));
 		return percent.get();
 	}
 
@@ -80,14 +79,6 @@ public class GuiSurgery extends ContainerScreen<ContainerSurgery>
 			return 249;
 		}
 		return 245;
-	}
-
-	public void addApplyButton(int x, int y) {
-		this.addButton(new Button(width / 2 - x, height / 2 - y, 17, 9, new StringTextComponent("Apply"), but -> {
-			player.getCapability(CyberCapabilities.CYBERWARE_CAPABILITY).ifPresent(cap -> {
-				cap.setAllCyberware(this.container.getInventory());
-			});
-		}));
 	}
 
 

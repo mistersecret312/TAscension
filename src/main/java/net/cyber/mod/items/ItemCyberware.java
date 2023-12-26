@@ -1,6 +1,7 @@
 package net.cyber.mod.items;
 
 import net.cyber.mod.helper.CyberPartEnum;
+import net.cyber.mod.helper.CyberPartType;
 import net.cyber.mod.helper.ICyberPart;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.player.PlayerEntity;
@@ -12,16 +13,22 @@ public class ItemCyberware extends Item implements ICyberPart {
         super(properties);
     }
 
-    public CyberPartEnum type;
+    public CyberPartEnum cat;
+    public CyberPartType type;
     public int essence;
 
-    public ItemCyberware(Properties properties, CyberPartEnum type, int essenceCost){
+    public ItemCyberware(Properties properties, CyberPartEnum cat, CyberPartType type, int essenceCost){
         super(properties);
-
+        this.cat = cat;
         this.type = type;
         this.essence = essenceCost;
+    }
 
-
+    public ItemCyberware(Properties properties, CyberPartEnum cat, int essenceCost){
+        super(properties);
+        this.cat = cat;
+        this.type = CyberPartType.UPGRADE;
+        this.essence = essenceCost;
     }
 
     @Override
@@ -38,19 +45,22 @@ public class ItemCyberware extends Item implements ICyberPart {
 
     @Override
     public CyberPartEnum getCategory() {
-        return this.type;
+        return this.cat;
+    }
+
+    @Override
+    public CyberPartType getType() {
+        return type;
     }
 
     @Override
     public void runOnce(PlayerEntity player) {
-        player.getAttribute(Attributes.MAX_HEALTH).setBaseValue(player.getAttribute(Attributes.MAX_HEALTH).getValue()+2);
+        player.getAttribute(Attributes.MAX_HEALTH).setBaseValue(player.getAttributeValue(Attributes.MAX_HEALTH)+2);
     }
 
     @Override
     public void runOnceUndo(PlayerEntity player) {
-        if (player.getAttribute(Attributes.MAX_HEALTH).getBaseValue() >= 20) {
-            player.getAttribute(Attributes.MAX_HEALTH).setBaseValue(player.getAttributeValue(Attributes.MAX_HEALTH) - 2);
-        }
+        player.getAttribute(Attributes.MAX_HEALTH).setBaseValue(player.getAttributeValue(Attributes.MAX_HEALTH)-2);
     }
 
     @Override

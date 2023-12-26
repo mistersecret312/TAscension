@@ -7,6 +7,7 @@ import net.cyber.mod.helper.Helper;
 import net.cyber.mod.tileentity.TileEntitySurgery;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.inventory.container.IContainerListener;
 import net.minecraft.item.ItemStack;
@@ -16,6 +17,8 @@ import net.minecraftforge.items.SlotItemHandler;
 
 public class ContainerSurgery extends BEContainer<TileEntitySurgery> {
     public PlayerEntity entity;
+    public NonNullList<ItemStack> oldstacks = NonNullList.create();
+    public NonNullList<ItemStack> newstacks = NonNullList.create();
 
     protected ContainerSurgery(ContainerType<?> type, int id) {
         super(type, id);
@@ -90,17 +93,30 @@ public class ContainerSurgery extends BEContainer<TileEntitySurgery> {
             if(cap.getAllCyberware() != stacks){
                 cap.setAllCyberware(stacks);
             }
+
+            oldstacks.forEach(cap::handleRemoved);
+            newstacks.forEach(cap::handleAdded);
         });
         for(int i = 0; i<24; i++){
             this.getInventory().set(i, ItemStack.EMPTY);
         }
 
+        oldstacks.clear();
+        newstacks.clear();
         super.onContainerClosed(playerIn);
     }
 
     @Override
     public void addListener(IContainerListener listener) {
         super.addListener(listener);
+    }
+
+    public void addToRemoved(ItemStack stack){
+        oldstacks.add(stack);
+    }
+
+    public void addToAdded(ItemStack stack){
+        newstacks.add(stack);
     }
 
     @Override

@@ -15,12 +15,13 @@ public interface ICyberUser extends INBTSerializable<CompoundNBT> {
     NonNullList<ItemStack> getAllCyberware();
     int getSlotItemIn(ItemStack cyberware);
     void handleRemoved(ItemStack oldCyberware);
+    void handleAdded(ItemStack cyberware);
     boolean isCyberwareInstalled(ItemStack cyberware);
     void setAllCyberware(NonNullList<ItemStack> stacks);
-    int getEssence();
-    void setEssence(int essence);
-    int getMaxEssence();
-    void setMaxEssence(int maxEssence);
+    float getEssence();
+    void setEssence(float essence);
+    float getMaxEssence();
+    void setMaxEssence(float maxEssence);
     void tick();
 
     @Deprecated
