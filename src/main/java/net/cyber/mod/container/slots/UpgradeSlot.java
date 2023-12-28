@@ -56,7 +56,7 @@ public class UpgradeSlot extends SlotItemHandler {
     @Override
     public boolean isItemValid(ItemStack stack) {
         if(stack.getItem() instanceof ICyberPart) {
-            return this.filter.test(((ICyberPart) stack.getItem()).getCategory());
+            return this.filter.test(((ICyberPart) stack.getItem()).getCategory()) && this.filtertype.test(((ICyberPart) stack.getItem()).getType());
         } else return false;
     }
 

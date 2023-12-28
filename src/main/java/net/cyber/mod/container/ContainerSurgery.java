@@ -97,18 +97,10 @@ public class ContainerSurgery extends BEContainer<TileEntitySurgery> {
             oldstacks.forEach(cap::handleRemoved);
             newstacks.forEach(cap::handleAdded);
         });
-        for(int i = 0; i<24; i++){
-            this.getInventory().set(i, ItemStack.EMPTY);
-        }
 
         oldstacks.clear();
         newstacks.clear();
         super.onContainerClosed(playerIn);
-    }
-
-    @Override
-    public void addListener(IContainerListener listener) {
-        super.addListener(listener);
     }
 
     public void addToRemoved(ItemStack stack){
