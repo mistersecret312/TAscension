@@ -37,13 +37,9 @@ public class UpgradeSlot extends SlotItemHandler {
     }
 
     @Override
-    public ItemStack onTake(PlayerEntity thePlayer, ItemStack stack) {
-        surgery.addToRemoved(stack);
-        return super.onTake(thePlayer, stack);
-    }
-
-    @Override
     public void putStack(@Nonnull ItemStack stack) {
+        System.out.print(this.getStack());
+        surgery.addToRemoved(this.getStack());
         surgery.addToAdded(stack);
         super.putStack(stack);
     }

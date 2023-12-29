@@ -94,20 +94,18 @@ public class ContainerSurgery extends BEContainer<TileEntitySurgery> {
                 cap.setAllCyberware(stacks);
             }
 
-            oldstacks.forEach(cap::handleRemoved);
             newstacks.forEach(cap::handleAdded);
         });
-
-        oldstacks.clear();
-        newstacks.clear();
         super.onContainerClosed(playerIn);
     }
 
-    public void addToRemoved(ItemStack stack){
+    public void addToRemoved(ItemStack stack) {
+        oldstacks.clear();
         oldstacks.add(stack);
     }
 
     public void addToAdded(ItemStack stack){
+        newstacks.clear();
         newstacks.add(stack);
     }
 

@@ -64,9 +64,9 @@ public class GuiSurgery extends ContainerScreen<ContainerSurgery>
 		//Remove super class call so we don't show our container title
 	}
 
-	public double getPercentage(){
+	public double getPercentage() {
 		AtomicDouble percent = new AtomicDouble();
-		this.player.getCapability(CyberCapabilities.CYBERWARE_CAPABILITY).ifPresent(cap -> percent.set(cap.getEssence()/cap.getMaxEssence()));
+		this.player.getCapability(CyberCapabilities.CYBERWARE_CAPABILITY).ifPresent(cap -> percent.set((((float) cap.getEssence()) / ((float) cap.getMaxEssence()))));
 		return percent.get();
 	}
 
