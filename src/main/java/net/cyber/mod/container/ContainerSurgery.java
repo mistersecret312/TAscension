@@ -94,22 +94,22 @@ public class ContainerSurgery extends BEContainer<TileEntitySurgery> {
                 cap.setAllCyberware(stacks);
             }
 
-            newstacks.forEach(cap::handleAdded);
-        });
-        super.onContainerClosed(playerIn);
-        if (!oldstacks.equals(newstacks)) {
-            int size = Math.min(oldstacks.size(), newstacks.size());
-            for (int i = 0; i < size; i++) {
-                if (!ItemStack.areItemStacksEqual(oldstacks.get(i), newstacks.get(i))) {
-                    if(!newstacks.get(i).isEmpty()){
-                        System.out.print("Added:" + newstacks.get(i));
-                    }
-                    if(!oldstacks.get(i).isEmpty()){
-                        System.out.print("Removed:" + oldstacks.get(i));
+            if (!oldstacks.equals(newstacks)) {
+                int size = Math.min(oldstacks.size(), newstacks.size());
+                for (int i = 0; i < size; i++) {
+                    if (!ItemStack.areItemStacksEqual(oldstacks.get(i), newstacks.get(i))) {
+                        if(!newstacks.get(i).isEmpty()){
+                            cap.handleAdded(newstacks.get(i));
+                        }
+                        if(!oldstacks.get(i).isEmpty()){
+                            cap.handleRemoved(oldstacks.get(i));
+                        }
                     }
                 }
             }
-        }
+        });
+        super.onContainerClosed(playerIn);
+
         oldstacks.clear();
         newstacks.clear();
     }
