@@ -38,7 +38,7 @@ public class UpgradeSlot extends SlotItemHandler {
 
     @Override
     public void putStack(@Nonnull ItemStack stack) {
-        System.out.print(this.getStack());
+        //System.out.print(this.getStack());
         surgery.addToRemoved(this.getStack());
         surgery.addToAdded(stack);
         super.putStack(stack);
