@@ -97,15 +97,30 @@ public class ContainerSurgery extends BEContainer<TileEntitySurgery> {
             newstacks.forEach(cap::handleAdded);
         });
         super.onContainerClosed(playerIn);
+        if (!oldstacks.equals(newstacks)) {
+            int size = Math.min(oldstacks.size(), newstacks.size());
+            for (int i = 0; i < size; i++) {
+                if (!ItemStack.areItemStacksEqual(oldstacks.get(i), newstacks.get(i))) {
+                    if(!newstacks.get(i).isEmpty()){
+                        System.out.print("Added:" + newstacks.get(i));
+                    }
+                    if(!oldstacks.get(i).isEmpty()){
+                        System.out.print("Removed:" + oldstacks.get(i));
+                    }
+                }
+            }
+        }
+        oldstacks.clear();
+        newstacks.clear();
     }
 
     public void addToRemoved(ItemStack stack) {
-        oldstacks.clear();
+        //oldstacks.clear();
         oldstacks.add(stack);
     }
 
     public void addToAdded(ItemStack stack){
-        newstacks.clear();
+        //newstacks.clear();
         newstacks.add(stack);
     }
 
