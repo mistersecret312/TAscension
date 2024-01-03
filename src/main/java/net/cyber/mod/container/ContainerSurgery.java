@@ -82,40 +82,38 @@ public class ContainerSurgery extends BEContainer<TileEntitySurgery> {
 
         Helper.addPlayerInvContainer(this, inv, 0, 54);
     }
-
     @Override
     public void onContainerClosed(PlayerEntity playerIn) {
-        System.out.println("onContainerClosed called");
+        //System.out.println("onContainerClosed called");
         playerIn.getCapability(CyberCapabilities.CYBERWARE_CAPABILITY).ifPresent(cap -> {
             NonNullList<ItemStack> stacks = NonNullList.create();
-            for(int i = 0; i<24; i++){
+            for (int i = 0; i < 24; i++) {
                 stacks.add(i, this.getInventory().get(i));
             }
 
-            if(cap.getAllCyberware() != stacks){
+            if (cap.getAllCyberware() != stacks) {
                 cap.setAllCyberware(stacks);
             }
-            if (!oldstacks.equals(newstacks)) {
-                int size = Math.min(oldstacks.size(), newstacks.size());
-                System.out.println("size:" + size);
-                for (int i = 0; i < size; i++) {
-                    if (!ItemStack.areItemStacksEqual(oldstacks.get(i), newstacks.get(i)) && size!=1 && size!=2 && size!=3 && size!=4) {
-                        if(!newstacks.get(i).isEmpty()){
-                            System.out.println("newstacks");
-                            System.out.println(i);
-                            System.out.println(newstacks.get(i));
-                            cap.handleAdded(newstacks.get(i));
-                        }
-                        if(!oldstacks.get(i).isEmpty()){
-                            cap.handleRemoved(oldstacks.get(i));
+            if(playerIn.world.isRemote) {
+                if (!oldstacks.equals(newstacks)) {
+                    int size = Math.min(oldstacks.size(), newstacks.size());
+                    //System.out.println("size:" + size);
+                    for (int i = 0; i < size; i++) {
+                        if (!ItemStack.areItemStacksEqual(oldstacks.get(i), newstacks.get(i))) {
+                            if (!newstacks.get(i).isEmpty()) {
+                                cap.handleAdded(newstacks.get(i));
+                            }
+                            if (!oldstacks.get(i).isEmpty()) {
+                                cap.handleRemoved(oldstacks.get(i));
+                            }
                         }
                     }
                 }
+                oldstacks.clear();
+                newstacks.clear();
             }
         });
         super.onContainerClosed(playerIn);
-        oldstacks.clear();
-        newstacks.clear();
     }
 
     public void addToRemoved(ItemStack stack) {
