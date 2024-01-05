@@ -1,11 +1,9 @@
 package net.cyber.mod.container.slots;
 
-import net.cyber.mod.cap.CyberCapabilities;
 import net.cyber.mod.container.ContainerSurgery;
 import net.cyber.mod.helper.CyberPartEnum;
 import net.cyber.mod.helper.CyberPartType;
 import net.cyber.mod.helper.ICyberPart;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;

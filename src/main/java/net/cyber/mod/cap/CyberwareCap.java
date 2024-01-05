@@ -97,6 +97,13 @@ public class CyberwareCap implements ICyberUser {
         }
     }
 
+    /*@Override
+    public void handleAmountSet(ItemStack stack, int health){
+        if(stack.getItem() instanceof ICyberPart){
+            ((ICyberPart)stack.getItem()).runUpgrade(player);
+        }
+    }*/
+
     @Override
     public NonNullList<ItemStack> getAllCyberware() {
         NonNullList<ItemStack> stacks = NonNullList.create();

@@ -4,12 +4,15 @@ import net.cyber.mod.cap.CyberCapabilities;
 import net.cyber.mod.container.slots.UpgradeSlot;
 import net.cyber.mod.helper.CyberPartEnum;
 import net.cyber.mod.helper.Helper;
+import net.cyber.mod.helper.ICyberPart;
+import net.cyber.mod.items.ItemCyberware;
 import net.cyber.mod.tileentity.TileEntitySurgery;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.inventory.container.IContainerListener;
+import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.NonNullList;
@@ -94,23 +97,46 @@ public class ContainerSurgery extends BEContainer<TileEntitySurgery> {
             if (cap.getAllCyberware() != stacks) {
                 cap.setAllCyberware(stacks);
             }
-            if(playerIn.world.isRemote) {
-                if (!oldstacks.equals(newstacks)) {
-                    int size = Math.min(oldstacks.size(), newstacks.size());
+            if(!playerIn.world.isRemote) {
+                //if (!oldstacks.equals(newstacks)) {
+                    //int size = Math.min(oldstacks.size(), newstacks.size());
                     //System.out.println("size:" + size);
-                    for (int i = 0; i < size; i++) {
-                        if (!ItemStack.areItemStacksEqual(oldstacks.get(i), newstacks.get(i))) {
+                    for (int i = 0; i < 24; i++) {
+                        /*if (!ItemStack.areItemStacksEqual(oldstacks.get(i), newstacks.get(i))) {
                             if (!newstacks.get(i).isEmpty()) {
                                 cap.handleAdded(newstacks.get(i));
                             }
                             if (!oldstacks.get(i).isEmpty()) {
                                 cap.handleRemoved(oldstacks.get(i));
                             }
+                        }*/
+                        double health = 0;
+                        Slot slot = this.getSlot(i);
+                        ItemStack stack = slot.getStack();
+                        System.out.println("stack.getItem(): " + stack.getItem());
+                        System.out.println("newstacks.get(i): " + newstacks.get(i));
+                        /*if (!stack.isEmpty() && stack.getItem() instanceof ICyberPart && newstacks.get(i).equals(stack.getItem())) {
+                            //cap.handleAdded(slot.getStack());
+                            System.out.println("Slot id:" + i + "Item: " + stack.getItem());
+                        }*/
+                        if (stack.getItem() instanceof ItemCyberware) {
+                            ItemCyberware cyberwareItem = (ItemCyberware) stack.getItem();
+                            health++;
+                            cyberwareItem.runUpgrade(playerIn, health);  // Replace 'health' with the actual health value
                         }
                     }
-                }
-                oldstacks.clear();
-                newstacks.clear();
+                    //
+                    /*
+                    int health = newstacks.size();
+                    //int slotnum[health];
+                    for (int i = 0; i < 24; i++) {
+                        Slot slot = this.getSlot(i);
+                        ItemStack stack = slot.getStack();
+                    }
+                    */
+                //}
+                    oldstacks.clear();
+                    newstacks.clear();
             }
         });
         super.onContainerClosed(playerIn);
