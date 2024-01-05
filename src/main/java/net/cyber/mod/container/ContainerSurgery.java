@@ -4,21 +4,15 @@ import net.cyber.mod.cap.CyberCapabilities;
 import net.cyber.mod.container.slots.UpgradeSlot;
 import net.cyber.mod.helper.CyberPartEnum;
 import net.cyber.mod.helper.Helper;
-import net.cyber.mod.helper.ICyberPart;
-import net.cyber.mod.items.ItemCyberware;
 import net.cyber.mod.tileentity.TileEntitySurgery;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.container.ContainerType;
-import net.minecraft.inventory.container.IContainerListener;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.NonNullList;
-import net.minecraftforge.items.SlotItemHandler;
 
-import static net.minecraft.item.Items.AIR;
 
 public class ContainerSurgery extends BEContainer<TileEntitySurgery> {
     public PlayerEntity entity;

@@ -1,10 +1,8 @@
 package net.cyber.mod.cap;
 
-import com.google.common.collect.Maps;
 import net.cyber.mod.config.CyberConfigs;
 import net.cyber.mod.helper.*;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.AirItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.*;
 import net.minecraft.util.NonNullList;
