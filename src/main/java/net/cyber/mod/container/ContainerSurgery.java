@@ -88,7 +88,7 @@ public class ContainerSurgery extends BEContainer<TileEntitySurgery> {
         for (int i = 0; i < 24; i++) {
             oldstackslist.add(ItemStack.EMPTY);
         }
-        System.out.println("oldstackslist size: " + oldstackslist.size());
+        //System.out.println("oldstackslist size: " + oldstackslist.size());
         for (int i = 0; i < 24; i++) {
             oldstackslist.set(i, this.getSlot(i).getStack().copy());
             //System.out.println("Initialization stack: " + oldstackslist.get(i));
@@ -97,7 +97,7 @@ public class ContainerSurgery extends BEContainer<TileEntitySurgery> {
 
     @Override
     public void onContainerClosed(PlayerEntity playerIn) {
-        System.out.println("onContainerClosed called");
+        //System.out.println("onContainerClosed called");
         playerIn.getCapability(CyberCapabilities.CYBERWARE_CAPABILITY).ifPresent(cap -> {
             /*NonNullList<ItemStack> stacks = NonNullList.create();
             if (cap.getAllCyberware() != stacks) {
