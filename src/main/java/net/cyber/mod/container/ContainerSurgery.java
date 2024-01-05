@@ -18,10 +18,16 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.items.SlotItemHandler;
 
+import static net.minecraft.item.Items.AIR;
+
 public class ContainerSurgery extends BEContainer<TileEntitySurgery> {
     public PlayerEntity entity;
     public NonNullList<ItemStack> oldstacks = NonNullList.create();
     public NonNullList<ItemStack> newstacks = NonNullList.create();
+    public NonNullList<ItemStack> oldstackslist = NonNullList.create();
+    public NonNullList<ItemStack> newstackslist = NonNullList.create();
+
+
 
     protected ContainerSurgery(ContainerType<?> type, int id) {
         super(type, id);
@@ -84,49 +90,50 @@ public class ContainerSurgery extends BEContainer<TileEntitySurgery> {
         this.addSlot(new UpgradeSlot(this, type -> type.equals(CyberPartEnum.SKIN), tile,  23, 165, 85));
 
         Helper.addPlayerInvContainer(this, inv, 0, 54);
+
+        for (int i = 0; i < 24; i++) {
+            oldstackslist.add(ItemStack.EMPTY);
+        }
+        System.out.println("oldstackslist size: " + oldstackslist.size());
+        for (int i = 0; i < 24; i++) {
+            oldstackslist.set(i, this.getSlot(i).getStack().copy());
+            //System.out.println("Initialization stack: " + oldstackslist.get(i));
+        }
     }
+
     @Override
     public void onContainerClosed(PlayerEntity playerIn) {
-        //System.out.println("onContainerClosed called");
+        System.out.println("onContainerClosed called");
         playerIn.getCapability(CyberCapabilities.CYBERWARE_CAPABILITY).ifPresent(cap -> {
-            NonNullList<ItemStack> stacks = NonNullList.create();
-            for (int i = 0; i < 24; i++) {
-                stacks.add(i, this.getInventory().get(i));
-            }
-
+            /*NonNullList<ItemStack> stacks = NonNullList.create();
             if (cap.getAllCyberware() != stacks) {
                 cap.setAllCyberware(stacks);
-            }
+            }*/
             if(!playerIn.world.isRemote) {
-                //if (!oldstacks.equals(newstacks)) {
-                    //int size = Math.min(oldstacks.size(), newstacks.size());
-                    //System.out.println("size:" + size);
-
-                    double health = 0;
-                    for (int i = 0; i < 24; i++) {
-                        /*if (!ItemStack.areItemStacksEqual(oldstacks.get(i), newstacks.get(i))) {
-                            if (!newstacks.get(i).isEmpty()) {
-                                cap.handleAdded(newstacks.get(i));
-                            }
-                            if (!oldstacks.get(i).isEmpty()) {
-                                cap.handleRemoved(oldstacks.get(i));
-                            }
-                        }*/
-                        Slot slot = this.getSlot(i);
-                        ItemStack stack = slot.getStack();
-                        System.out.println("stack.getItem(): " + stack.getItem());
-                        if (stack.getItem() instanceof ItemCyberware) {
-                            ItemCyberware cyberwareItem = (ItemCyberware) stack.getItem();
-                            health++;
-                            cyberwareItem.runUpgrade(playerIn, health);  // Replace 'health' with the actual health value
+                for (int i = 0; i < 24; i++) {
+                    newstackslist.add(ItemStack.EMPTY);
+                }
+                for (int i = 0; i < 24; i++) {
+                    newstackslist.set(i, this.getSlot(i).getStack().copy());
+                }
+                for (int i = 0; i < 24; i++) {
+                    Slot slot = this.getSlot(i);
+                    newstackslist.set(i, slot.getStack());
+                    if(!ItemStack.areItemStacksEqual(oldstackslist.get(i), newstackslist.get(i))){
+                        //System.out.println("oldstack: " + oldstacks.get(i));
+                        //System.out.println("oldstack: " + newstackslist.get(i));
+                        if(!newstackslist.get(i).isEmpty()){
+                            cap.handleAdded(newstackslist.get(i));
+                            oldstackslist.set(i, newstackslist.get(i));
                         }
-                        if(i==23)
-                            System.out.println("Health: " + health);
+                        else if (!oldstackslist.get(i).isEmpty()) {
+                            cap.handleRemoved(oldstackslist.get(i));
+                            oldstackslist.set(i, newstackslist.get(i));
+                        }
                     }
-
-                //}
-                    //oldstacks.clear();
-                    newstacks.clear();
+                }
+                oldstackslist.clear();
+                newstackslist.clear();
             }
         });
         super.onContainerClosed(playerIn);

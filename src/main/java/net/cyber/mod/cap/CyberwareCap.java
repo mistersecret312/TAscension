@@ -1,29 +1,14 @@
 package net.cyber.mod.cap;
 
 import com.google.common.collect.Maps;
-import jdk.nashorn.internal.runtime.regexp.joni.Config;
-import net.cyber.mod.CyberMod;
 import net.cyber.mod.config.CyberConfigs;
 import net.cyber.mod.helper.*;
-import net.cyber.mod.items.CyberItems;
-import net.minecraft.client.Minecraft;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.AirItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.nbt.*;
-import net.minecraft.util.Direction;
-import net.minecraft.util.IItemProvider;
 import net.minecraft.util.NonNullList;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.items.ItemStackHandler;
-
-import javax.annotation.Nonnull;
-import java.util.*;
 
 public class CyberwareCap implements ICyberUser {
 
@@ -31,7 +16,6 @@ public class CyberwareCap implements ICyberUser {
     public float essence = CyberConfigs.COMMON.BaseEssence.get();
     public float maxEssence = CyberConfigs.COMMON.BaseEssence.get();
     public ItemStackHandler handler = new ItemStackHandler(24);
-    private Map<ItemStack, Boolean> mapActivated = Maps.newHashMap();
 
     public CyberwareCap(PlayerEntity ent){
         this.player = ent;
@@ -96,13 +80,6 @@ public class CyberwareCap implements ICyberUser {
             ((ICyberPart)stack.getItem()).runOnce(player);
         }
     }
-
-    /*@Override
-    public void handleAmountSet(ItemStack stack, int health){
-        if(stack.getItem() instanceof ICyberPart){
-            ((ICyberPart)stack.getItem()).runUpgrade(player);
-        }
-    }*/
 
     @Override
     public NonNullList<ItemStack> getAllCyberware() {
