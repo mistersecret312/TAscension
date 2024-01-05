@@ -101,6 +101,8 @@ public class ContainerSurgery extends BEContainer<TileEntitySurgery> {
                 //if (!oldstacks.equals(newstacks)) {
                     //int size = Math.min(oldstacks.size(), newstacks.size());
                     //System.out.println("size:" + size);
+
+                    double health = 0;
                     for (int i = 0; i < 24; i++) {
                         /*if (!ItemStack.areItemStacksEqual(oldstacks.get(i), newstacks.get(i))) {
                             if (!newstacks.get(i).isEmpty()) {
@@ -110,32 +112,20 @@ public class ContainerSurgery extends BEContainer<TileEntitySurgery> {
                                 cap.handleRemoved(oldstacks.get(i));
                             }
                         }*/
-                        double health = 0;
                         Slot slot = this.getSlot(i);
                         ItemStack stack = slot.getStack();
                         System.out.println("stack.getItem(): " + stack.getItem());
-                        System.out.println("newstacks.get(i): " + newstacks.get(i));
-                        /*if (!stack.isEmpty() && stack.getItem() instanceof ICyberPart && newstacks.get(i).equals(stack.getItem())) {
-                            //cap.handleAdded(slot.getStack());
-                            System.out.println("Slot id:" + i + "Item: " + stack.getItem());
-                        }*/
                         if (stack.getItem() instanceof ItemCyberware) {
                             ItemCyberware cyberwareItem = (ItemCyberware) stack.getItem();
                             health++;
                             cyberwareItem.runUpgrade(playerIn, health);  // Replace 'health' with the actual health value
                         }
+                        if(i==23)
+                            System.out.println("Health: " + health);
                     }
-                    //
-                    /*
-                    int health = newstacks.size();
-                    //int slotnum[health];
-                    for (int i = 0; i < 24; i++) {
-                        Slot slot = this.getSlot(i);
-                        ItemStack stack = slot.getStack();
-                    }
-                    */
+
                 //}
-                    oldstacks.clear();
+                    //oldstacks.clear();
                     newstacks.clear();
             }
         });
