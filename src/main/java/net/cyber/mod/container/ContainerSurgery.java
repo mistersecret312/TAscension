@@ -5,21 +5,23 @@ import net.cyber.mod.container.slots.UpgradeSlot;
 import net.cyber.mod.helper.CyberPartEnum;
 import net.cyber.mod.helper.Helper;
 import net.cyber.mod.tileentity.TileEntitySurgery;
-import net.cyber.mod.helper.ICyberPart;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.container.ContainerType;
-import net.minecraft.inventory.container.IContainerListener;
+import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.NonNullList;
-import net.minecraftforge.items.SlotItemHandler;
+
 
 public class ContainerSurgery extends BEContainer<TileEntitySurgery> {
     public PlayerEntity entity;
     public NonNullList<ItemStack> oldstacks = NonNullList.create();
     public NonNullList<ItemStack> newstacks = NonNullList.create();
+    public NonNullList<ItemStack> oldstackslist = NonNullList.create();
+    public NonNullList<ItemStack> newstackslist = NonNullList.create();
+
+
 
     protected ContainerSurgery(ContainerType<?> type, int id) {
         super(type, id);
@@ -82,50 +84,60 @@ public class ContainerSurgery extends BEContainer<TileEntitySurgery> {
         this.addSlot(new UpgradeSlot(this, type -> type.equals(CyberPartEnum.SKIN), tile,  23, 165, 85));
 
         Helper.addPlayerInvContainer(this, inv, 0, 54);
+
+        for (int i = 0; i < 24; i++) {
+            oldstackslist.add(ItemStack.EMPTY);
+        }
+        //System.out.println("oldstackslist size: " + oldstackslist.size());
+        for (int i = 0; i < 24; i++) {
+            oldstackslist.set(i, this.getSlot(i).getStack().copy());
+            //System.out.println("Initialization stack: " + oldstackslist.get(i));
+        }
     }
 
     @Override
     public void onContainerClosed(PlayerEntity playerIn) {
+        //System.out.println("onContainerClosed called");
         playerIn.getCapability(CyberCapabilities.CYBERWARE_CAPABILITY).ifPresent(cap -> {
-            NonNullList<ItemStack> stacks = NonNullList.create();
-            for(int i = 0; i<24; i++){
-                stacks.add(i, this.getInventory().get(i));
-            }
-            if(cap.getAllCyberware() != stacks){
+            /*NonNullList<ItemStack> stacks = NonNullList.create();
+            if (cap.getAllCyberware() != stacks) {
                 cap.setAllCyberware(stacks);
-            }
-
-            newstacks.forEach(cap::handleAdded);
-        });
-        if (!oldstacks.equals(newstacks)) {
-            int size = Math.min(oldstacks.size(), newstacks.size());
-            for (int i = 0; i < size; i++) {
-                if (!ItemStack.areItemStacksEqual(oldstacks.get(i), newstacks.get(i))) {
-                    if(!newstacks.get(i).isEmpty()){
-                        ((ICyberPart)newstacks.get(i).getItem()).runOnce(entity);
-                        System.out.print("Added:" + newstacks.get(i));
-                    }
-                    if(!oldstacks.get(i).isEmpty()){
-                        ((ICyberPart)oldstacks.get(i).getItem()).runOnceUndo(entity);
-                        System.out.print("Removed:" + oldstacks.get(i));
-
+            }*/
+            if(!playerIn.world.isRemote) {
+                for (int i = 0; i < 24; i++) {
+                    newstackslist.add(ItemStack.EMPTY);
+                }
+                for (int i = 0; i < 24; i++) {
+                    newstackslist.set(i, this.getSlot(i).getStack().copy());
+                }
+                for (int i = 0; i < 24; i++) {
+                    Slot slot = this.getSlot(i);
+                    newstackslist.set(i, slot.getStack());
+                    if(!ItemStack.areItemStacksEqual(oldstackslist.get(i), newstackslist.get(i))){
+                        //System.out.println("oldstack: " + oldstacks.get(i));
+                        //System.out.println("oldstack: " + newstackslist.get(i));
+                        if(!newstackslist.get(i).isEmpty()){
+                            cap.handleAdded(newstackslist.get(i));
+                            oldstackslist.set(i, newstackslist.get(i));
+                        }
+                        else if (!oldstackslist.get(i).isEmpty()) {
+                            cap.handleRemoved(oldstackslist.get(i));
+                            oldstackslist.set(i, newstackslist.get(i));
+                        }
                     }
                 }
+                oldstackslist.clear();
+                newstackslist.clear();
             }
         });
         super.onContainerClosed(playerIn);
-
-        oldstacks.clear();
-        newstacks.clear();
     }
 
     public void addToRemoved(ItemStack stack) {
-        //oldstacks.clear();
         oldstacks.add(stack);
     }
 
     public void addToAdded(ItemStack stack){
-        //newstacks.clear();
         newstacks.add(stack);
     }
 

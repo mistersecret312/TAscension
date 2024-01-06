@@ -10,5 +10,6 @@ public interface ICyberPart {
     CyberPartType getType();
     void runOnce(PlayerEntity player);
     void runOnceUndo(PlayerEntity player);
+    void runUpgrade(PlayerEntity player, double health);
     void runOnTick(PlayerEntity player);
 }
