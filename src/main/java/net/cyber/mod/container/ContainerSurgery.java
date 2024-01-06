@@ -5,6 +5,7 @@ import net.cyber.mod.container.slots.UpgradeSlot;
 import net.cyber.mod.helper.CyberPartEnum;
 import net.cyber.mod.helper.Helper;
 import net.cyber.mod.tileentity.TileEntitySurgery;
+import net.cyber.mod.helper.ICyberPart;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.IInventory;
@@ -94,16 +95,20 @@ public class ContainerSurgery extends BEContainer<TileEntitySurgery> {
                 cap.setAllCyberware(stacks);
             }
 
-            if (!oldstacks.equals(newstacks)) {
-                int size = Math.min(oldstacks.size(), newstacks.size());
-                for (int i = 0; i < size; i++) {
-                    if (!ItemStack.areItemStacksEqual(oldstacks.get(i), newstacks.get(i))) {
-                        if(!newstacks.get(i).isEmpty()){
-                            cap.handleAdded(newstacks.get(i));
-                        }
-                        if(!oldstacks.get(i).isEmpty()){
-                            cap.handleRemoved(oldstacks.get(i));
-                        }
+            newstacks.forEach(cap::handleAdded);
+        });
+        if (!oldstacks.equals(newstacks)) {
+            int size = Math.min(oldstacks.size(), newstacks.size());
+            for (int i = 0; i < size; i++) {
+                if (!ItemStack.areItemStacksEqual(oldstacks.get(i), newstacks.get(i))) {
+                    if(!newstacks.get(i).isEmpty()){
+                        ((ICyberPart)newstacks.get(i).getItem()).runOnce(entity);
+                        System.out.print("Added:" + newstacks.get(i));
+                    }
+                    if(!oldstacks.get(i).isEmpty()){
+                        ((ICyberPart)oldstacks.get(i).getItem()).runOnceUndo(entity);
+                        System.out.print("Removed:" + oldstacks.get(i));
+
                     }
                 }
             }
