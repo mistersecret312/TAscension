@@ -97,7 +97,6 @@ public class ContainerSurgery extends BEContainer<TileEntitySurgery> {
 
             newstacks.forEach(cap::handleAdded);
         });
-        super.onContainerClosed(playerIn);
         if (!oldstacks.equals(newstacks)) {
             int size = Math.min(oldstacks.size(), newstacks.size());
             for (int i = 0; i < size; i++) {
@@ -109,10 +108,13 @@ public class ContainerSurgery extends BEContainer<TileEntitySurgery> {
                     if(!oldstacks.get(i).isEmpty()){
                         ((ICyberPart)oldstacks.get(i).getItem()).runOnceUndo(entity);
                         System.out.print("Removed:" + oldstacks.get(i));
+
                     }
                 }
             }
-        }
+        });
+        super.onContainerClosed(playerIn);
+
         oldstacks.clear();
         newstacks.clear();
     }
